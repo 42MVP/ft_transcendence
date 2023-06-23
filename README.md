@@ -1,4 +1,4 @@
 # Read me
 
 ERD
-https://drawsql.app/teams/-397/diagrams/-2
+https://app.diagrams.net/#H42MVP%2Fft_transcendence%2Fmain%2FUntitled%20Diagram.drawio
