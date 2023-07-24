@@ -1,0 +1,72 @@
+version: "3"
+
+services:
+  frontend:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+      target: development
+    image: transcendence-frontend-dev:latest
+    container_name: transcendence-front-dev
+    environment:
+      VUE_APP_API_URL: ${VUE_APP_API_URL:-http://localhost:3000}
+    volumes:
+      - ../frontend/src:/app/src
+    networks:
+      - transcendence
+    depends_on:
+      - backend
+    expose:
+      - 5173
+    ports:
+      - 5173:5173
+  backend:
+    build:
+      context: backend
+      dockerfile: Dockerfile
+      target: development
+    image: transcendence-backend-dev:latest
+    container_name: transcendence-back-dev
+    env_file:
+      - ../backend/.env
+    volumes:
+      - ../backend/src:/app/src
+      - uploads_volumes:/app/uploads
+    networks:
+      - transcendence
+    depends_on:
+      - db
+    expose:
+      - 3000
+    ports:
+      - 3000:3000
+  db:
+    image: postgres:alpine
+    container_name: postgres
+    env_file:
+      - ../backend/.env
+    restart: always
+    volumes:
+      - db_volumes:/var/lib/postgresql/data
+    networks:
+      - transcendence
+    expose:
+      - 5432
+networks:
+  transcendence:
+    driver: bridge
+volumes:
+  db_volumes:
+    name: ft_tsen_db_volumes
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ${HOME}/transcendence/data/postgresql/
+  uploads_volumes:
+    name: ft_tsen_uploads_volumes
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ${HOME}/transcendence/data/upload/
