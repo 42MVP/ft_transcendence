@@ -7,8 +7,6 @@ services:
       dockerfile: Dockerfile
     image: transcendence-frontend:latest
     container_name: frontend
-    environment:
-      VUE_APP_API_URL: ${VUE_APP_API_URL:-http://localhost}
     networks:
       - transcendence
     depends_on:

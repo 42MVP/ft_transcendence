@@ -2,7 +2,7 @@ NAME = ft_transcendence
 
 all: build
 
-dev:
+dev: set-env
 	@echo "🏗️  Building ${NAME}-dev ...\n"
 	@git switch develop
 	@cd frontend && git switch develop
@@ -12,21 +12,21 @@ dev:
 	@mkdir -p ${HOME}/transcendence/data/postgresql-log
 	@docker compose -f .docker/docker-compose.yml up --build
 
-build:
+build: set-env
 	@echo "🏗️  Building ${NAME} ...\n"
 	@mkdir -p ${HOME}/transcendence/data/upload
 	@mkdir -p ${HOME}/transcendence/data/postgresql
 	@mkdir -p ${HOME}/transcendence/data/postgresql-log
 	@docker compose -f docker-compose.yml up --build
 
-up:
+up: set-env
 	@echo "🔺  Starting ${NAME} ...\n"
 	@mkdir -p ${HOME}/transcendence/data/upload
 	@mkdir -p ${HOME}/transcendence/data/postgresql
 	@mkdir -p ${HOME}/transcendence/data/postgresql-log
 	@docker compose -f ./docker-compose.yml up
 
-dev-up:
+dev-up: set-env
 	@echo "🔺  Starting ${NAME}-dev ...\n"
 	@mkdir -p ${HOME}/transcendence/data/upload
 	@mkdir -p ${HOME}/transcendence/data/postgresql
@@ -54,6 +54,11 @@ stop-all:
 
 clear:
 	@sudo rm -rf ${HOME}/transcendence
+
+set-env:
+	@chmod u+x set_cluster_local_ip_script.sh
+	@./set_cluster_local_ip_script.sh
+
 
 clean: down dev-down
 	@echo "🧹  Cleaning ${name} ... (keep images)\n"
