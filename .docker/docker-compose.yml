@@ -41,7 +41,7 @@ services:
     ports:
       - 3000:3000
   db:
-    image: postgres:alpine
+    image: postgres:latest
     container_name: postgres
     env_file:
       - ../backend/.env
