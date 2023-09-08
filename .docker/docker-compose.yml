@@ -8,8 +8,6 @@ services:
       target: development
     image: transcendence-frontend-dev:latest
     container_name: transcendence-front-dev
-    environment:
-      VUE_APP_API_URL: ${VUE_APP_API_URL:-http://localhost:3000}
     volumes:
       - ../frontend/src:/app/src
     networks:
@@ -41,7 +39,7 @@ services:
     ports:
       - 3000:3000
   db:
-    image: postgres:alpine
+    image: postgres:latest
     container_name: postgres
     env_file:
       - ../backend/.env
