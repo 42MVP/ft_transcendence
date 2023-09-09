@@ -52,9 +52,6 @@ dev-down:
 stop-all:
 	@docker stop $$(docker ps -aq)
 
-clear:
-	@sudo rm -rf ${HOME}/transcendence
-
 set-env-dev:
 	@chmod u+x set_cluster_local_ip_script.sh
 	@./set_cluster_local_ip_script.sh 5173
@@ -65,7 +62,7 @@ set-env:
 
 clean: down dev-down
 	@echo "🧹  Cleaning ${name} ... (keep images)\n"
-	@docker volume rm ft_tsen_db_volumes ft_tsen_uploads_volumes
+	@docker volume rm db_volumes
 
 fclean: clean
 	@echo "🧼  Total Cleaning ...\n"
